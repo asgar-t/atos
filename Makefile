@@ -1,13 +1,13 @@
 ASM = nasm
-CC = gcc
-CCFLAGS = -m32 -fno-stack-protector -fno-builtin -c
+CC = /usr/opt/cross/bin/i686-elf-gcc
+CCFLAGS =  -ffreestanding -Wall -Wextra -c -g
 ASM_FLAGS = -f elf32
 src_dir = src
 build_dir = build
 target_dir = atos/boot
-LINKER = ld
+LINKER = /usr/opt/cross/bin/i686-elf-ld
 LINKER_FILE = linker.ld
-LINKER_FLAGS = -m elf_i386 -T $(LINKER_FILE)
+LINKER_FLAGS = -nostdlib -T $(LINKER_FILE)
 
 .PHONY: all
 
@@ -41,6 +41,9 @@ $(build_dir)/idt.o: $(src_dir)/idt/idt.c
 $(build_dir)/idts.o: $(src_dir)/idt/idt.asm
 	$(ASM) $(ASM_FLAGS) $< -o $@
 
+
+force:
+	make -B
 
 run:
 	qemu-system-i386 $(build_dir)/atos.iso

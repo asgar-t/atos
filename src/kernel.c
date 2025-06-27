@@ -1,24 +1,42 @@
 #include "vga.h"
 #include "gdt.h"
 #include "idt/idt.h"
-void kmain(void);
+#include "timer.h"
+#include "printf.h"
+#include "keyboard.h"
+#include "multiboot.h"
+#include "memory.h"
 
 
-void kmain(void){
+
+void kmain(uint32_t magic, multiboot_info* boot_info){
+
     Reset();
-    print("HELLdiwau90duaw90du90a\n");
-    print("yo\n");
-
     gdt_init();
 
-    print("worked!!\n");
+    printf("GDT initialized \n");
 
     idt_init();
 
-    print("IDT INITIALIZED\n\n testing divide by 0\n\n");
+    printf("IDT INITIALIZED\n");
 
-    int x = 5/0;
+    initTimer();
 
+	printf("%d\n %u", -100, -100);
+    printf("%x\n", 31412);
+
+    initKeyboard();
+
+    //initMemory(boot_info);
+
+    char c = 0;
+    while (1){
+        if(c = (char)read_char_from_buffer()){
+            putc(c);
+        }
+
+
+    }
 
 
 

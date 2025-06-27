@@ -9,6 +9,7 @@
 
 
 void print(const char*s);
+void putc(const char c);
 void scrollUp();
 void newLine();
 void Reset();

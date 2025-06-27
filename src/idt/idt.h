@@ -26,6 +26,8 @@ void idt_set_gate(uint8_t num, uint32_t base, uint16_t sel, uint8_t flags);
 void idt_init();
 void isr_handler(interrupt_registers* regs);
 void irq_handler(interrupt_registers* regs);
+void irq_install_handler (int irq, void (*handler)(interrupt_registers* regs));
+
 
 extern void isr0();
 extern void isr1();

@@ -1,0 +1,6 @@
+romimage: file=/usr/share/bochs/BIOS-bochs-legacy
+vgaromimage: file=/home/asgart/Downloads/VGABIOS-lgpl-latest.bin
+ata0-slave: type=cdrom, path=build/atos.iso, status=inserted
+boot: cdrom
+display_library: x, options="gui_debug"
+log: bochsout.txt

@@ -4,3 +4,4 @@ ata0-slave: type=cdrom, path=build/atos.iso, status=inserted
 boot: cdrom
 display_library: x, options="gui_debug"
 log: bochsout.txt
+

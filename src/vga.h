@@ -8,8 +8,8 @@
 #define HEIGHT 25
 
 
-void print(const char*s);
-void putc(const char c);
-void scrollUp();
-void newLine();
-void Reset();
+void print(const char*s); //prints a string
+void putc(const char c); //prints a character
+void scrollUp(); //moves screen up by one line
+void newLine(); //new line when we reach the  end of the current one
+void Reset(); //reset vga output to all black

@@ -1,5 +1,6 @@
 #include "util.h"
 
+//iterates through the data, setting each byte to whatever value designated
 void memset(void* dest, char val, uint32_t count){
 
     char* cur = (char*)dest;
@@ -12,6 +13,7 @@ void memset(void* dest, char val, uint32_t count){
 }
 
 
+//reading from/writing to ports
 void outPortB(uint16_t port, uint8_t value){
 
     asm volatile ("outb %1, %0" : : "dN" (port), "a" (value));

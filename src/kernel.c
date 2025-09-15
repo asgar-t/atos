@@ -8,9 +8,10 @@
 #include "memory.h"
 
 
-
+//simple kernel, doesn't do much, more to come!
 void kmain(uint32_t magic, multiboot_info* boot_info){
 
+	//initialize things with message so user can see
     Reset();
     gdt_init();
 
@@ -28,7 +29,7 @@ void kmain(uint32_t magic, multiboot_info* boot_info){
     initKeyboard();
 
     //initMemory(boot_info);
-
+	//reads from buffer, puts characters to screen
     char c = 0;
     while (1){
         if(c = (char)read_char_from_buffer()){

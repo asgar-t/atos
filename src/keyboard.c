@@ -4,30 +4,35 @@
 #include "vga.h"
 #define BUFFER_SIZE 256
 
+
+//buffer for key presses
 uint32_t buffer[BUFFER_SIZE];
 uint8_t insert = 0;
 uint8_t user = 0;
 
 
 uint32_t read_char_from_buffer(){
-    if (insert == user){
+    if (insert == user){ //if buffer is empty
         return 0;
     }
-    return buffer[user++];
+    return buffer[user++]; //return the value, increase user position to next 
 
 
 }
 
 static void insert_in_buffer(uint32_t to_insert){
 
+    //put value into buffer
     buffer[insert] = to_insert;
     insert++;
 
 }
 
 
-uint8_t caps;
+uint8_t caps; //capital letter or no
 
+
+//special keys and their values
 const uint32_t UNKNOWN = 0xFFFFFFFF;
 const uint32_t ESC = 0xFFFFFFFF - 1;
 const uint32_t CTRL = 0xFFFFFFFF - 2;
@@ -62,7 +67,7 @@ const uint32_t NONE = 0xFFFFFFFF - 30;
 const uint32_t ALTGR = 0xFFFFFFFF - 31;
 const uint32_t NUMLCK = 0xFFFFFFFF - 32;
 
-
+///lowercase letters
 const uint32_t lowercase[128] = {
 UNKNOWN,ESC,'1','2','3','4','5','6','7','8',
 '9','0','-','=','\b','\t','q','w','e','r',
@@ -76,6 +81,7 @@ UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,
 UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN
 };
 
+//uppercase letters
 const uint32_t uppercase[128] = {
     UNKNOWN,ESC,'!','@','#','$','%','^','&','*','(',')','_','+','\b','\t','Q','W','E','R',
 'T','Y','U','I','O','P','{','}','\n',CTRL,'A','S','D','F','G','H','J','K','L',':','"','~',LSHFT,'|','Z','X','C',
@@ -88,7 +94,7 @@ UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN
 
 
 
-
+//puts keyboard handler in the interrupt table
 void initKeyboard(){
     irq_install_handler(1, keyboard_handler);
     memset(buffer, 0, sizeof(uint32_t) * BUFFER_SIZE);
@@ -98,8 +104,10 @@ void initKeyboard(){
 
 }
 
+//main handler
 void keyboard_handler(interrupt_registers* regs){
 
+    //reads values from keyboard
     char scan = inPortB(0x60) & 0x7f; //key pressed
     char press = inPortB(0x60) & 0x80;
 
@@ -123,7 +131,7 @@ void keyboard_handler(interrupt_registers* regs){
         case 88:
             break;
         case 42: //shift
-            caps = !caps;
+            caps = !caps; //handle capital letters
             break;
         case 58: //caps lock
             if (press == 0)
@@ -132,7 +140,7 @@ void keyboard_handler(interrupt_registers* regs){
 
         default:
             if (press == 0){
-                if(caps)
+                if(caps) //put char in buffer
                     insert_in_buffer(uppercase[scan]);
                 else
                     insert_in_buffer(lowercase[scan]);

@@ -2,6 +2,9 @@
 #include "stdint.h"
 
 
+//got from the osdev wiki, haven't done enough memory management and configuration of the OS to use all of this stuff, soon there will be more info
+//and uses of these structures
+
 struct multiboot_aout_symbol_table {
 
     uint32_t tabsize;

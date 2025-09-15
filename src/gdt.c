@@ -8,6 +8,7 @@ gdt_entry gdt_entries[6];
 gdt_ptr pgdt;
 tss_entry_struct tss_entry;
 
+//configure the gdt
 void gdt_init(){
     pgdt.limit = (sizeof(gdt_entry)*6) -1;
     pgdt.base = (unsigned int)&gdt_entries;
@@ -22,6 +23,7 @@ void gdt_init(){
     gdt_flush((unsigned int)&pgdt);
     tss_flush();
 }
+
 
 void set_gdt_gate(uint32_t num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran){
 

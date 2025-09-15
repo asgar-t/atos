@@ -4,6 +4,9 @@
 
 #define  MMAP_ENTRY_SIZE sizeof(struct multiboot_mmap_entry)
 
+
+//uses the multiboot info and gets the memory map. Not too much done with this yet, as I have taken a break to work on other projects
+//however we can see all the available memory regions in this simple function
 void initMemory(multiboot_info* boot_info){
 
     int i;
